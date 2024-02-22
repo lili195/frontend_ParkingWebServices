@@ -1,17 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1> ¡Bienvenido! Profavor elija la opción que desee realizar</h1>
+  <p>
+    <img img :src="require('../src/assets/car.png')" alt="Car logo">
+  </p>
+  <HomePage />
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+import HomePage from './components/HomePage.vue'
+
 </script>
 
 <style>
