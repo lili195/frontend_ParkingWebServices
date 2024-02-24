@@ -1,5 +1,5 @@
 <template>
-  <h1> ¡Bienvenido! Profavor elija la opción que desee realizar</h1>
+  <h1> ¡Bienvenido! Por favor elija la opción que desee realizar</h1>
   <p>
     <img img :src="require('../src/assets/car.png')" alt="Car logo">
   </p>
