@@ -21,9 +21,9 @@
         </div>
 
         <div v-if="currentOption === 'listarVehiculos'">
-            <div class="car-container" v-for="car in cars" :key="car.licensePlate">
-                <div class="car-item">
-                    <img :src="car.photoPath" alt="Car Photo" class="car-photo">
+            <div class="car-container">
+                <div class="car-item" v-for="car in cars" :key="car.licensePlate">
+                    <img :src="'data:image/png;base64,' + car.photo" alt="Car Photo" class="car-photo">
                     <div class="car-details">
                         <p><strong>Placa:</strong> {{ car.licensePlate }}</p>
                         <p><strong>Color:</strong> {{ car.color }}</p>
@@ -123,6 +123,7 @@ const submitRetirarForm = async () => {
     // Limpiar el formulario después de la llamada exitosa
     retirarLicensePlate.value = '';
 };
+
 </script>
 
 <style scoped>
@@ -167,30 +168,39 @@ ul {
 li {
     margin: 5px 0;
 }
+
 .car-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
 
-    .car-item {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        width: 200px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
+.car-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 30%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
 
-    .car-photo {
-        max-width: 100%;
-        height: auto;
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
+.car-photo {
+    max-width: 100%;
+    height: 200px; 
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 
-    .car-details {
-        text-align: left;
-    }
+.car-details {
+    text-align: center; 
+    flex-grow: 1; 
+}
+
 
 </style>
 
