@@ -117,10 +117,20 @@ const handleFileChange = (event) => {
 };
 
 const submitRetirarForm = async () => {
-    // Llamada a la API para retirar el carro
-    // Puedes utilizar axios u otra librería para hacer la llamada HTTP
-    // Ejemplo: const response = await axios.patch('/cars', { license_plate: retirarLicensePlate.value });
-    // Limpiar el formulario después de la llamada exitosa
+    currentOption.value = 'retirarCarro';
+    try {
+        const response = await axios.patch('http://localhost:8000/cars', { license_plate: retirarLicensePlate.value });
+        if (response.status === 200) {
+            console.log('auto eliminado correctamente');
+            alert('Auto retirado exitosamente');
+        } else {
+            console.log('no se elimino el auto correctamente');
+            alert('No se pudo retirar el vehiculo');
+        }
+    } catch (error) {
+        console.error('Error al retirar un auto')
+        alert('Ocurrio un error al intentar retirar un auto')
+    }
     retirarLicensePlate.value = '';
 };
 
@@ -185,23 +195,21 @@ li {
     box-sizing: border-box;
     margin-bottom: 10px;
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
 }
 
 .car-photo {
     max-width: 100%;
-    height: 200px; 
+    height: 200px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
 .car-details {
-    text-align: center; 
-    flex-grow: 1; 
+    text-align: center;
+    flex-grow: 1;
 }
-
-
 </style>
 
   
