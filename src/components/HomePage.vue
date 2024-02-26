@@ -119,7 +119,7 @@ const handleFileChange = (event) => {
 const submitRetirarForm = async () => {
     currentOption.value = 'retirarCarro';
     try {
-      const response = await axios.patch('/cars', {license_plate: retirarLicensePlate.value});
+      const response = await axios.patch('http://localhost:8000/cars', {license_plate: retirarLicensePlate.value});
       if (response.status === 200){
         console.log('auto eliminado correctamente');
         alert('Auto retirado exitosamente');
