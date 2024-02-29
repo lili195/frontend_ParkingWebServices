@@ -11,7 +11,20 @@
                 <input v-model="licensePlate" type="text" required>
 
                 <label for="color">Color:</label>
-                <input v-model="color" type="text" required>
+                <select v-model="color" required>
+                    <option value="" disabled selected>Seleccione un color</option>
+                    <option value="Negro">Negro</option>
+                    <option value="Azul">Azul</option>
+                    <option value="Verde">Verde</option>
+                    <option value="Rojo">Rojo</option>
+                    <option value="Amarillo">Amarillo</option>
+                    <option value="Naranja">Naranja</option>
+                    <option value="Blanco">Blanco</option>
+                    <option value="Gris">Gris</option>
+                    <option value="Marrón">Marrón</option>
+                    <option value="Morado">Morado</option>
+                    <option value="Rosado">Rosado</option>
+                </select>
 
                 <label for="photo">Foto:</label>
                 <input type="file" @change="handleFileChange" accept="image/*">
