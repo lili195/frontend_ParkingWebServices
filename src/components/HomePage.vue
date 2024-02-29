@@ -55,6 +55,7 @@ const color = ref('');
 const photo = ref(null);
 const cars = ref([]);
 const retirarLicensePlate = ref('');
+const url = 'http://192.168.0.6:8000/cars';
 
 const registerCheckIn = () => {
     currentOption.value = 'registrarIngreso';
@@ -63,7 +64,7 @@ const registerCheckIn = () => {
 const showVehicleList = async () => {
     currentOption.value = 'listarVehiculos';
     try {
-        const response = await axios.get('http://localhost:8000/cars');
+        const response = await axios.get(url);
         cars.value = response.data.vehicles;
     } catch (error) {
         console.error('Error al obtener la lista de vehículos:', error);
@@ -85,7 +86,7 @@ const submitCheckInForm = async () => {
     console.log(formData)
 
     try {
-        const response = await axios.post('http://localhost:8000/cars', formData, {
+        const response = await axios.post(url, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -119,7 +120,7 @@ const handleFileChange = (event) => {
 const submitRetirarForm = async () => {
     currentOption.value = 'retirarCarro';
     try {
-        const response = await axios.patch('http://localhost:8000/cars', { licensePlate: retirarLicensePlate.value });
+        const response = await axios.patch(url, { licensePlate: retirarLicensePlate.value });
         if (response.status === 200) {
             console.log('auto eliminado correctamente');
             alert('Auto retirado exitosamente');
