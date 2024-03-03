@@ -11,7 +11,20 @@
                 <input v-model="licensePlate" type="text" required>
 
                 <label for="color">Color:</label>
-                <input v-model="color" type="text" required>
+                <select v-model="color" required>
+                    <option value="" disabled selected>Seleccione un color</option>
+                    <option value="Negro">Negro</option>
+                    <option value="Azul">Azul</option>
+                    <option value="Verde">Verde</option>
+                    <option value="Rojo">Rojo</option>
+                    <option value="Amarillo">Amarillo</option>
+                    <option value="Naranja">Naranja</option>
+                    <option value="Blanco">Blanco</option>
+                    <option value="Gris">Gris</option>
+                    <option value="Marrón">Marrón</option>
+                    <option value="Morado">Morado</option>
+                    <option value="Rosado">Rosado</option>
+                </select>
 
                 <label for="photo">Foto:</label>
                 <input type="file" @change="handleFileChange" accept="image/*">
@@ -56,6 +69,8 @@ const photo = ref(null);
 const cars = ref([]);
 const retirarLicensePlate = ref('');
 
+const serverRoute = 'http://localhost:8000/cars';
+
 const registerCheckIn = () => {
     currentOption.value = 'registrarIngreso';
 };
@@ -63,7 +78,7 @@ const registerCheckIn = () => {
 const showVehicleList = async () => {
     currentOption.value = 'listarVehiculos';
     try {
-        const response = await axios.get('http://localhost:8000/cars');
+        const response = await axios.get(serverRoute);
         cars.value = response.data.vehicles;
     } catch (error) {
         console.error('Error al obtener la lista de vehículos:', error);
@@ -85,7 +100,7 @@ const submitCheckInForm = async () => {
     console.log(formData)
 
     try {
-        const response = await axios.post('http://localhost:8000/cars', formData, {
+        const response = await axios.post(serverRoute, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -119,17 +134,17 @@ const handleFileChange = (event) => {
 const submitRetirarForm = async () => {
     currentOption.value = 'retirarCarro';
     try {
-      const response = await axios.patch('http://localhost:8000/cars', {license_plate: retirarLicensePlate.value});
-      if (response.status === 200){
-        console.log('auto eliminado correctamente');
-        alert('Auto retirado exitosamente');
-      }else{
-        console.log('no se elimino el auto correctamente');
-        alert('No se pudo retirar el vehiculo');
-      }
-    }catch (error){
-      console.error('Error al retirar un auto')
-      alert('Ocurrio un error al intentar retirar un auto')
+        const response = await axios.patch(serverRoute, { licensePlate: retirarLicensePlate.value });
+        if (response.status === 200) {
+            console.log('auto eliminado correctamente');
+            alert('Auto retirado exitosamente');
+        } else {
+            console.log('no se elimino el auto correctamente');
+            alert('No se pudo retirar el vehiculo');
+        }
+    } catch (error) {
+        console.error('Error al retirar un auto')
+        alert('Ocurrio un error al intentar retirar un auto')
     }
     retirarLicensePlate.value = '';
 };
@@ -195,23 +210,21 @@ li {
     box-sizing: border-box;
     margin-bottom: 10px;
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
 }
 
 .car-photo {
     max-width: 100%;
-    height: 200px; 
+    height: 200px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
 .car-details {
-    text-align: center; 
-    flex-grow: 1; 
+    text-align: center;
+    flex-grow: 1;
 }
-
-
 </style>
 
   
