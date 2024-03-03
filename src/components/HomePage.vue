@@ -68,12 +68,18 @@ const color = ref('');
 const photo = ref(null);
 const cars = ref([]);
 const retirarLicensePlate = ref('');
+const isValidLicensePlate = ref(false);
 
 const serverRoute = 'http://localhost:8000/cars';
 
 const registerCheckIn = () => {
     currentOption.value = 'registrarIngreso';
 };
+
+const validateLicensePlate = () => {
+  const regex = /^[a-zA-Z]{3}\d{3}$/;
+  isValidLicensePlate.value = regex.test(licensePlate.value);
+}
 
 const showVehicleList = async () => {
     currentOption.value = 'listarVehiculos';
@@ -93,30 +99,40 @@ const checkOutVehicle = () => {
 
 const submitCheckInForm = async () => {
     const formData = new FormData();
+
     formData.append('licensePlate', licensePlate.value);
     formData.append('color', color.value);
     formData.append('photo', photo.value);
 
     console.log(formData)
+    validateLicensePlate(licensePlate.value)
 
-    try {
+    if (isValidLicensePlate.value === true){
+        console.log("Placa valida registrada");
+
+      try {
         const response = await axios.post(serverRoute, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         });
 
         if (response.status === 200) {
-            console.log('Datos guardados con éxito');
-            alert('Datos guardados con éxito');
-            clearForm()
+          console.log('Datos guardados con éxito');
+          alert('Datos guardados con éxito');
+          clearForm()
         } else {
-            console.error('Error al guardar los datos');
-            alert('Datos no guardados');
+          console.error('Error al guardar los datos');
+          alert('Datos no guardados');
         }
-    } catch (error) {
+      } catch (error) {
         console.error('Error en la solicitud:', error);
         alert('Ocurrió un error al intentar guardar los datos');
+      }
+    }else{
+        console.log("No cumple con el formato de placa");
+        alert("Por favor, ingrese una placa valida");
+        clearForm();
     }
 };
 
